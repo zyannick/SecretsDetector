@@ -1,0 +1,16 @@
+fastapi==0.115.14
+uvicorn[standard]
+scikit-learn==1.7.0
+joblib
+PyYAML
+awscli
+dvc==3.60.1
+dvc-s3==3.2.2
+pandas==2.3.0
+optuna==4.4.0
+ml-collections==1.1.0
+mlflow==3.1.1
+seaborn==0.13.2
+xgboost==3.0.2
+pytest
+pytest-cov

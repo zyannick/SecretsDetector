@@ -1,0 +1,30 @@
+stages:
+  generate_data:
+    cmd: python data/generate_dataset.py
+    outs:
+    - secrets_dataset.csv
+
+
+  optimize:
+    cmd: python modules/optuna_optimizer.py 
+    deps:
+    - secrets_dataset.csv
+    - modules/optuna_optimizer.py
+    - modules/machine_learning_model.py
+    outs:
+    - output/best_params.yaml
+    - output/best_config.yaml
+
+  train:
+    cmd: python modules/model_trainer.py 
+    deps:
+    - secrets_dataset.csv
+    - output/best_params.yaml
+    - output/best_config.yaml
+    - modules/model_trainer.py
+    - modules/machine_learning_model.py
+    outs:
+    - output/secret_classifier.pkl
+    metrics:
+    - output/metrics.json:
+        cache: false

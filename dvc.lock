@@ -1,0 +1,65 @@
+schema: '2.0'
+stages:
+  generate_data:
+    cmd: python data/generate_dataset.py
+    outs:
+    - path: secrets_dataset.csv
+      hash: md5
+      md5: 81ebc5882b381627655f300d3ded1171
+      size: 338303
+  optimize:
+    cmd: python modules/optuna_optimizer.py
+    deps:
+    - path: modules/machine_learning_model.py
+      hash: md5
+      md5: 61c1206780cd56f8b4e6a21ece1eac60
+      size: 6702
+    - path: modules/optuna_optimizer.py
+      hash: md5
+      md5: dca900e334e098b93e532c7d3db3b543
+      size: 2859
+    - path: secrets_dataset.csv
+      hash: md5
+      md5: 81ebc5882b381627655f300d3ded1171
+      size: 338303
+    outs:
+    - path: output/best_config.yaml
+      hash: md5
+      md5: 83cb0688f2d3e8a45ffa131c019b5062
+      size: 116
+    - path: output/best_params.yaml
+      hash: md5
+      md5: b4439fcea7295205d947dc6a8b6f4047
+      size: 120
+  train:
+    cmd: python modules/model_trainer.py
+    deps:
+    - path: modules/machine_learning_model.py
+      hash: md5
+      md5: 61c1206780cd56f8b4e6a21ece1eac60
+      size: 6702
+    - path: modules/model_trainer.py
+      hash: md5
+      md5: db4103d65cb03d2ca4871bd7a984d838
+      size: 5418
+    - path: output/best_config.yaml
+      hash: md5
+      md5: 83cb0688f2d3e8a45ffa131c019b5062
+      size: 116
+    - path: output/best_params.yaml
+      hash: md5
+      md5: b4439fcea7295205d947dc6a8b6f4047
+      size: 120
+    - path: secrets_dataset.csv
+      hash: md5
+      md5: 81ebc5882b381627655f300d3ded1171
+      size: 338303
+    outs:
+    - path: output/metrics.json
+      hash: md5
+      md5: 7d58bce8c7f3220a0798270d9e029db0
+      size: 490
+    - path: output/secret_classifier.pkl
+      hash: md5
+      md5: cdcc3f8819205af1311efdbae7bc9096
+      size: 274025

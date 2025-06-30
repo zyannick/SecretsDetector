@@ -1,0 +1,4 @@
+[core]
+    remote = my-s3-remote
+['remote "my-s3-remote"']
+    url = s3://dataset-secretsdetector
